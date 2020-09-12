@@ -19,3 +19,44 @@
 # String anotherString = new String( characterArray );
 # To convert a String to lowercase:
 # String lowercaseString = myString.toLowerCase();
+import string
+import random
+import pdb
+# pdb.set_trace()
+
+# NOTE: This assignment was compeleted by using a dictionary as a cipher rather than a 2D-array
+
+def create_cipher():
+	# list containing the letters of the alphabet and the space character
+	ordered_alpha = list(string.ascii_lowercase + ' ')
+	# randomly shuffeld alphabet list
+	shuffled_alpha = list(string.ascii_lowercase + ' ')
+	random.shuffle(shuffled_alpha)
+	# cipher is a dictionary with {"letter":"random letter"} key:value pairs
+	cipher = {}
+	for index,letter in enumerate(ordered_alpha):
+		cipher[letter] = shuffled_alpha[index]
+	return cipher
+
+def encrypt(text, cipher):
+	encrypted_text = ""
+	for letter in text:
+		encrypted_text = encrypted_text + cipher[letter]
+	return encrypted_text
+
+def crypt(encrypted_text, cipher):
+	decrypted_text = ""
+	for letter in encrypted_text:
+		for key, value in cipher.items(): 
+			if letter == value: 
+				decrypted_text = decrypted_text + key
+	return decrypted_text
+		
+
+cipher = create_cipher()
+text_to_encrypt = input("Enter text to encrypt: ").lower()
+print(f"Cipher:\n {cipher}")
+encrypted_text = encrypt(text_to_encrypt, cipher)
+print("Encrypted text: " + encrypted_text)
+decrypted_text = crypt(encrypted_text, cipher)
+print("Decrytped text: " + decrypted_text)
